@@ -1,0 +1,22 @@
+- hosts: web
+  become: true
+  tasks:
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Start and enable Nginx
+      service:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: Deploy HTML website
+      copy:
+        src: site/index.html
+        dest: /var/www/html/index.html
